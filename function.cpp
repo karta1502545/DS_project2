@@ -95,6 +95,7 @@ bool find_destination() //const int** charge_distance_map, const int** visitedma
 void create_destination_array()
 {
     // it's complete. TODO:sort it. using std? using sort_destination_cmp
+    
 }
 
 void run()
