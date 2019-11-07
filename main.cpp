@@ -8,7 +8,7 @@ using namespace std;
 int m, n, nr, nc, cr, cc, dr, dc, dd, life, now_life;
 // mn matrix. now and charge position. destination position and distance, batterylife, now_batterylife
 int **map, **visitedmap, **charge_distance_map;
-position* destination_array;
+position *destination_array, *route_arr;
 int destination_array_size;
 
 int main()
@@ -23,14 +23,16 @@ int main()
     set_charge_and_wall_true(); // set charge and wall to "true".
 
     now_life = life;
+    printmatrix(charge_distance_map);
     cout << "initial : " << cr << cc << endl << "start!" << endl;
+    route_arr = new position [m*n];
     while(find_destination()){ //if it's true, dr and dc should be in the right position.
-        run(); // go to the destination and back to the charge station. battery should be charged!
+        run(); // go to the destination and back to the charge station. battery should be charged! // the farest one is been put at the last place to the front[0]
         now_life = life;
     }
     cout << "Finished!" << endl << endl;
     printmatrix(map);
-    printmatrix(charge_distance_map);
     print_robot_position();
+    delete_memory_allocation();
     return 0;
 }
