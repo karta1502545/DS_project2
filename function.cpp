@@ -85,23 +85,43 @@ bool sort_destination_cmp(position a, position b)
 }
 bool find_destination() //const int** charge_distance_map, const int** visitedmap
 {
-    // if it can find a destination, return true, if not, return false.
-    // using the map, charge position and battery life to find out the farest spot as the destination.
-    // think of an efficient way to find the destination.
-
-    return false;
-}
-
-void create_destination_array()
-{
-    // it's complete. TODO:sort it. using std? using sort_destination_cmp
-    
+    static int now_index = destination_array_size - 1;
+    int pop_dr, pop_dc, pop_dd, count = 0;
+    bool find = false;
+    while(!find && now_index>=0){
+        pop_dr = destination_array[now_index].r;
+        pop_dc = destination_array[now_index].c;
+        pop_dd = destination_array[now_index].d;
+        if(!visitedmap[pop_dr][pop_dc]){
+            find = true;
+            dr = pop_dr;
+            dc = pop_dc;
+            dd = pop_dd;
+        }
+        now_index--;
+        count++;
+    }
+    cout << count << " ";
+    return find;
 }
 
 void run()
 {
     // run to dc, dr, and go back to cc, cr.
     // revise visitedmap using map.
+    route_to_destination();
+    route_back_to_charge();
+    
+}
+
+int* route_to_destination()
+{
+    
+}
+
+int* route_back_to_charge()
+{
+
 }
 
 

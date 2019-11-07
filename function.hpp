@@ -2,7 +2,7 @@
 #define FUNCTION_H_INCLUED
 class position;
 
-extern int m, n, nr, nc, cr, cc, dr, dc, life, now_life;
+extern int m, n, nr, nc, cr, cc, dr, dc, dd, life, now_life;
 extern int **map, **visitedmap, **charge_distance_map;
 extern position* destination_array;
 extern int destination_array_size;
@@ -15,10 +15,11 @@ void inputmap(); // int**& map
 void print_robot_position();
 void set_charge_and_wall_true();
 
-void create_destination_array();
 bool find_destination(); // wall is set to -1 in visitedmap. // const int** charge_distance_map, const int ** visitedmap
 bool sort_destination_cmp();
 void run(); //int ** visitedmap, int ** map
+void route_to_destination();
+void route_back_to_charge();
 void BFS();
 
 #endif // FUNCTION_H_INCLUED

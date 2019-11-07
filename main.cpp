@@ -5,8 +5,8 @@
 
 using namespace std;
 
-int m, n, nr, nc, cr, cc, dr, dc, life, now_life;
-// mn matrix. now and charge position. destination position. batterylife, now_batterylife
+int m, n, nr, nc, cr, cc, dr, dc, dd, life, now_life;
+// mn matrix. now and charge position. destination position and distance, batterylife, now_batterylife
 int **map, **visitedmap, **charge_distance_map;
 position* destination_array;
 int destination_array_size;
