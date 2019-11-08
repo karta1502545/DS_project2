@@ -10,7 +10,15 @@ class position{ //用來建造queue的
         int r;
         int d;
         position(): r(-1), c(-1){};
-        position(int x, int y): r(x), c(y){};
+        position(int r, int c, int d): r(r), c(c), d(d){};
+        position& operator = (const position &p){
+            if(this != &p){
+                c = p.c;
+                r = p.r;
+                d = p.d;
+            }
+            return *this;
+        }
 };
 
 void printmatrix(int** map)
@@ -96,6 +104,12 @@ bool find_destination() //const int** charge_distance_map, const int** visitedma
         }
         now_index--;
     }
+    /*
+    if(find)
+        cout << "Find destination! row: " << dr << " column: " << dc << endl;
+    else
+        cout << "Can't find any destination!" << endl;
+    */
     return find;
 }
 
@@ -105,7 +119,9 @@ void run()
     // revise visitedmap using map.
     // nr, nc(global var) is unused.
     route_to_destination();
+    //printmatrix(visitedmap);
     route_back_to_charge();
+    //printmatrix(visitedmap);
 }
 
 void route_to_destination()
@@ -116,7 +132,7 @@ void route_to_destination()
     route_arr[index].c = now_c;
     route_arr[index].r = now_r;
     index++;
-    visitedmap[now_c][now_r] = true;
+    visitedmap[now_r][now_c] = true;
     while(now_r != cr || now_c != cc){
         if(charge_distance_map[now_r][now_c-1] < charge_distance_map[now_r][now_c]){ // left, won't appear "out of bound" occasion
             now_r = now_r;
@@ -152,9 +168,11 @@ void route_to_destination()
         }
     }
     // print out the result
-    index--;
+    index-=2;
     while(index >= 0){
-        cout << "row: " <<route_arr[index].r << " column :" << route_arr[index].c << endl;
+        cout << route_arr[index].r << " " << route_arr[index].c << endl;
+        now_life--;
+        //cout << "now_life :" << now_life << endl;
         index--;
     }
 }
@@ -163,17 +181,88 @@ void route_back_to_charge()
 {
     // run back to charge place.
     // revise visitedmap in the procedure.
+    //cout << "Start to come back to charge position! row: " << dr << " column: " << dc << endl;
     bool find_next = false;
     int now_r = dr, now_c = dc; // start push to array from the next step.
+    int now_d = charge_distance_map[now_r][now_c];
     // print result out when it's been calculated.
     // find the unvisited position first, if not find, then we choose the smaller distance to be next step.
+    position next_step;
     while(now_r != cr || now_c != cc){
-        position* choose_best_step = new position [4];
-        for(int i=0; i<4; i++){
-            
+        find_next = false;
+        position now(now_r, now_c ,charge_distance_map[now_r][now_c]);
+        position left(now_r, now_c-1 ,charge_distance_map[now_r][now_c-1]);
+        position right(now_r, now_c+1 ,charge_distance_map[now_r][now_c+1]);
+        position up(now_r-1, now_c ,charge_distance_map[now_r-1][now_c]);
+        position down(now_r+1, now_c ,charge_distance_map[now_r+1][now_c]);
+        if(now_life == 1){
+            position charge_position(cr, cc, 0);
+            next_step = charge_position;
+            find_next = true;
         }
+        if(!find_next){
+            if(left.d < now.d && !visitedmap[left.r][left.c]){
+                next_step = left;
+                find_next = true;
+            }
+            else if(right.d < now.d && !visitedmap[right.r][right.c]){
+                next_step = right;
+                find_next = true;
+            }
+            else if(up.d < now.d && !visitedmap[up.r][up.c]){
+                next_step = up;
+                find_next = true;
+            }
+            else if(right.d < now.d && !visitedmap[down.r][down.c]){
+                next_step = down;
+                find_next = true;
+            }
+        }
+        if(!find_next && now_life > now_d+1){
+            if(left.d > now.d && !visitedmap[left.r][left.c]){
+                next_step = left;
+                find_next = true;
+            }
+            else if(right.d > now.d && !visitedmap[right.r][right.c]){
+                next_step = right;
+                find_next = true;
+            }
+            else if(up.d > now.d && !visitedmap[up.r][up.c]){
+                next_step = up;
+                find_next = true;
+            }
+            else if(down.d > now.d && !visitedmap[down.r][down.c]){
+                next_step = down;
+                find_next = true;
+            }
+        }
+
+        if(!find_next){
+            if(left.d < now.d){
+                next_step = left;
+                find_next = true;
+            }
+            else if(right.d < now.d){
+                next_step = right;
+                find_next = true;
+            }
+            else if(up.d < now.d){
+                next_step = up;
+                find_next = true;
+            }
+            else if(down.d < now.d){
+                next_step = down;
+                find_next = true;
+            }
+        }
+        now_r = next_step.r;
+        now_c = next_step.c;
+        now_d = charge_distance_map[now_r][now_c];
+        visitedmap[now_r][now_c] = true;
+        cout << now_r << " " << now_c << endl;
+        now_life--;
+        //cout << "now_life :" << now_life << endl;
     }
-    cout << "row: " << now_r << " column: " << now_c;
 }
 
 
@@ -263,7 +352,7 @@ void delete_memory_allocation()
     delete destination_array, route_arr;
 }
 /*
-7 10 30
+7 10 26
 1111111111
 1000100001
 1000100001
@@ -271,4 +360,9 @@ void delete_memory_allocation()
 1011111101
 1000000001
 1111R11111
+
+3 4 2
+1111
+1R01
+1111
 */

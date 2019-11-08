@@ -23,16 +23,18 @@ int main()
     set_charge_and_wall_true(); // set charge and wall to "true".
 
     now_life = life;
-    printmatrix(charge_distance_map);
-    cout << "initial : " << cr << cc << endl << "start!" << endl;
+    //printmatrix(charge_distance_map);
+    //cout << "initial : " << cr << cc << endl << "start!" << endl;
     route_arr = new position [m*n];
+    cout << cr << " " << cc << endl;
     while(find_destination()){ //if it's true, dr and dc should be in the right position.
-        run(); // go to the destination and back to the charge station. battery should be charged! // the farest one is been put at the last place to the front[0]
+        run(); // go to the destination and back to the charge station. battery should be charged!
         now_life = life;
     }
-    cout << "Finished!" << endl << endl;
-    printmatrix(map);
-    print_robot_position();
+    
+    //cout << "Finished!" << endl << endl;
+    //printmatrix(map);
+    //print_robot_position();
     delete_memory_allocation();
     return 0;
 }
