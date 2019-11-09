@@ -1,6 +1,6 @@
 #include <iostream>
+#include <fstream>
 #include "function.hpp"
-#include <algorithm>
 
 using namespace std;
 
@@ -45,7 +45,7 @@ void inputmap() //int**& map
     char c;
     for(int i=0; i<m; i++){
         for(int j=0; j<n; j++){
-           cin >> c;
+           infile >> c;
            if(c == '1') map[i][j] = 1;
            if(c == '0') map[i][j] = 0;
            if(c == 'R'){
@@ -170,7 +170,7 @@ void route_to_destination()
     // print out the result
     index-=2;
     while(index >= 0){
-        cout << route_arr[index].r << " " << route_arr[index].c << endl;
+        outfile << route_arr[index].r << " " << route_arr[index].c << endl;
         now_life--;
         //cout << "now_life :" << now_life << endl;
         index--;
@@ -259,7 +259,7 @@ void route_back_to_charge()
         now_c = next_step.c;
         now_d = charge_distance_map[now_r][now_c];
         visitedmap[now_r][now_c] = true;
-        cout << now_r << " " << now_c << endl;
+        outfile << now_r << " " << now_c << endl;
         now_life--;
         //cout << "now_life :" << now_life << endl;
     }

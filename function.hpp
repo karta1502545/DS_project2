@@ -2,6 +2,9 @@
 #define FUNCTION_H_INCLUED
 class position;
 
+extern std::ifstream infile;
+extern std::ofstream outfile;
+
 extern int m, n, nr, nc, cr, cc, dr, dc, dd, life, now_life;
 extern int **map, **visitedmap, **charge_distance_map;
 extern position *destination_array, *route_arr;
