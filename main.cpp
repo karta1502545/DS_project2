@@ -1,15 +1,21 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <time.h>
 #include "function.hpp"
 #include "function.cpp"
 
 ifstream infile("floor.data");//以輸入方式開啟檔案
-ofstream outfile("final.path");//以輸出方式開啟檔案
+ofstream outfile("temp.path");
+ifstream temp_infile;
+ofstream finalfile("final.path");//以輸出方式開啟檔案
+ofstream mapfile("testcase.txt");//以輸出方式開啟檔案
 
 using namespace std;
 
-int m, n, nr, nc, cr, cc, dr, dc, dd, life, now_life;
+clock_t start, end;
+
+int m, n, nr, nc, cr, cc, dr, dc, dd, life, now_life, num_of_steps = 0;
 // mn matrix. now and charge position. destination position and distance, batterylife, now_batterylife
 int **map, **visitedmap, **charge_distance_map;
 position *destination_array, *route_arr;
@@ -17,6 +23,9 @@ int destination_array_size;
 
 int main()
 {
+    start = clock();
+    ios::sync_with_stdio(false);
+    cin.tie(0);
     infile >> m >> n >> life;
     map = createmap(m, n);
     inputmap();// 0 stands for floor, 1 stands for wall, -1 stands for recharge station.
@@ -35,10 +44,36 @@ int main()
         run(); // go to the destination and back to the charge station. battery should be charged!
         now_life = life;
     }
-    
+    outfile.close();
+    temp_infile.open("temp.path");
+    output_result();
     //cout << "Finished!" << endl << endl;
     //printmatrix(map);
     //print_robot_position();
     delete_memory_allocation();
+    temp_infile.close();
+    remove("temp.path");
+
+    for(int i=0; i<1000; i++){
+        mapfile << "1";
+    }
+    mapfile << endl;
+    for(int i=0; i<998; i++){
+        mapfile << "1";
+        for(int j=0; j<998; j++){
+            mapfile << "0";
+        }
+        mapfile << "1" << endl;
+    }
+    for(int i=0; i<1000; i++){
+        if(i!=1)
+            mapfile << "1";
+        else{
+            mapfile << "R";
+        }
+        
+    }
+    mapfile << endl;
+    std::cout << "time consume: " << (double)(clock() - start) / CLOCKS_PER_SEC << endl;
     return 0;
 }

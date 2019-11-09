@@ -4,13 +4,15 @@ class position;
 
 extern std::ifstream infile;
 extern std::ofstream outfile;
+extern std::ifstream temp_infile;
+extern std::ofstream finalfile;
 
-extern int m, n, nr, nc, cr, cc, dr, dc, dd, life, now_life;
+extern int m, n, nr, nc, cr, cc, dr, dc, dd, life, now_life, num_of_steps;
 extern int **map, **visitedmap, **charge_distance_map;
 extern position *destination_array, *route_arr;
 extern int destination_array_size;
 // mn matrix. now and charge position. destination position. batterylife, now_batterylife
-
+void output_result();
 void printmatrix(int** map);
 int** createmap(int m, int n);
 int** createmap(int m, int n, int reset_value);

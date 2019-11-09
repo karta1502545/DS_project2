@@ -21,6 +21,15 @@ class position{ //用來建造queue的
         }
 };
 
+void output_result()
+{
+    finalfile << num_of_steps << endl;
+    int temp_row, temp_col;
+    while(temp_infile >> temp_row >> temp_col){
+        finalfile << temp_row << " " << temp_col << endl;
+    }
+}
+
 void printmatrix(int** map)
 {
     for(int i=0; i<m; i++){
@@ -171,6 +180,7 @@ void route_to_destination()
     index-=2;
     while(index >= 0){
         outfile << route_arr[index].r << " " << route_arr[index].c << endl;
+        num_of_steps++;
         now_life--;
         //cout << "now_life :" << now_life << endl;
         index--;
@@ -213,7 +223,7 @@ void route_back_to_charge()
                 next_step = up;
                 find_next = true;
             }
-            else if(right.d < now.d && !visitedmap[down.r][down.c]){
+            else if(down.d < now.d && !visitedmap[down.r][down.c]){
                 next_step = down;
                 find_next = true;
             }
@@ -260,6 +270,7 @@ void route_back_to_charge()
         now_d = charge_distance_map[now_r][now_c];
         visitedmap[now_r][now_c] = true;
         outfile << now_r << " " << now_c << endl;
+        num_of_steps++;
         now_life--;
         //cout << "now_life :" << now_life << endl;
     }
