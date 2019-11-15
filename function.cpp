@@ -23,10 +23,10 @@ class position{ //用來建造queue的
 
 void output_result()
 {
-    finalfile << num_of_steps << endl;
+    finalfile << num_of_steps << '\n';
     int temp_row, temp_col;
     while(temp_infile >> temp_row >> temp_col){
-        finalfile << temp_row << " " << temp_col << endl;
+        finalfile << temp_row << " " << temp_col << '\n';
     }
 }
 
@@ -179,7 +179,7 @@ void route_to_destination()
     // print out the result
     index-=2;
     while(index >= 0){
-        outfile << route_arr[index].r << " " << route_arr[index].c << endl;
+        outfile << route_arr[index].r << ' ' << route_arr[index].c << '\n';
         num_of_steps++;
         now_life--;
         //cout << "now_life :" << now_life << endl;
@@ -269,7 +269,7 @@ void route_back_to_charge()
         now_c = next_step.c;
         now_d = charge_distance_map[now_r][now_c];
         visitedmap[now_r][now_c] = true;
-        outfile << now_r << " " << now_c << endl;
+        outfile << now_r << ' ' << now_c << '\n';
         num_of_steps++;
         now_life--;
         //cout << "now_life :" << now_life << endl;
@@ -376,4 +376,115 @@ void delete_memory_allocation()
 1111
 1R01
 1111
+*/
+
+
+
+/* 
+// DS 11/14 test practice
+
+bool *s = new bool [n];
+for(int i=0; i<n; i++){
+    s[i] = false;
+    dist[i] = length_matrix[v][i]; //與v相鄰的路徑
+}
+s[v] = true;
+dist[v] = 0;
+for(int i=0; i<n-1; i++){
+    // 選出不在set裡最少成本點
+    int u = Choose(n);
+    s[u] = true;
+    // 更新相鄰的最短路徑
+    for(int w=0; w<n; w++){
+        if(!s[w] && dist[u] + length[u][w] < dist[w]){
+            dist[w] = dist[u] + length[u][w];
+        }
+    }
+}
+
+for(int i=0; i<n; i++){
+    s[i] = false;
+    dist[i] = length[v][i];
+}
+s[v] = true;
+dist[v] = 0;
+for(int i=0; i<n-1; i++){
+    int u = choose(n);
+    s[u] = true;
+    for(int w=0; w<n; w++){
+        if(!s[w] && dist[u] + length[u][w] < dist[w]){
+            dist[w] = dist[u] + length[u][w];
+        }
+    }
+}
+
+for(int i=0; i<n; i++){
+    dist[i] = length[v][i];
+    s[i] = false;
+}
+s[v] = true;
+dist[v] = 0;
+for(int i=0; i<n-1; i++){
+    int u = choose(n);
+    s[u] = true;
+    for(int w=0; w<n; w++){
+        if(!s[w] && dist[u]+length[u][w] < dist[w]){
+            dist[w] = dist[u] + length[u][w];
+        }
+    }
+}
+
+int choose(int size)
+{
+    int lowest_cost;
+    bool init = false;
+    for(int i=0; i<n; i++){
+        if(!s[i]){
+            if(!init){
+                lowest_cost = i;
+            }
+            else{
+                if(dist[i] < dist[lowest_cost]){
+                    lowest_cost = i;
+                }
+            }
+        }
+    }   
+    return lowest_cost;
+}
+
+int Choose(int size)
+{
+    int lowest_cost;
+    bool init = false;
+    for(int i=0; i<size; i++){
+        if(!s[i]){
+            if(!init)
+                lowest_cost = i;
+            else{
+                if(dist[i] < dist[lowest_cost]){
+                    lowest_cost = i;
+                }
+            }
+        }
+    }
+}
+
+for(int i=0; i<n; i++){
+    for(int j=0; j<n; j++){
+        a[i][j] = length[i][j];
+    }
+}
+
+for(int k=0; k<n; k++){
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            if(a[i][j] > a[i][k] + a[k][j]){
+                a[i][j] = a[i][k] + a[k][j];           
+            }
+        }
+    }
+}
+
+a[i][j] = a[i][j] || (a[i][k]&&a[k][j]);
 */
