@@ -33,7 +33,7 @@ int main()
     set_charge_and_wall_true(); // set charge and wall to "true".
 
     now_life = life;
-    printmatrix(charge_distance_map);
+    //printmatrix(charge_distance_map);
     //cout << "initial : " << cr << cc << endl << "start!" << endl;
     route_arr = new position [m*n];
     outfile << cr << " " << cc << '\n';
